@@ -1,0 +1,35 @@
+entity Client {
+	lastName String required,
+    firstName String required,
+    middleName String,
+    age Integer min(18) max(80),
+    phone String required,
+    email String required,
+    photo ImageBlob
+}
+
+entity Category {
+	name String required
+}
+
+entity Product {
+	name String required,
+    price Double required min(0.1),
+    photo ImageBlob
+}
+
+entity Orders {
+	date LocalDate required
+    amount Integer min(1) max(10) required
+}
+
+relationship ManyToMany {
+	Product{category(name)} to Category{product}
+}
+
+relationship ManyToOne {
+	Orders{client(email)} to Client
+    Orders{product(name)} to Product
+}
+
+service all with serviceImpl
